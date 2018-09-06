@@ -23,6 +23,12 @@ def create_App(config_name):
     def get_orders():
         return jsonify(orders)
 
+    @app.route("/orders/<orderId>")
+    def get_order(orderId):
+        orderId = int(orderId)
+        for order in orders:
+            if order["id"] == orderId:
+                return jsonify(order)
 
 
     return app
