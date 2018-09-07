@@ -2,7 +2,7 @@ This is an online food delivery service
 
 [![Build Status](https://travis-ci.org/asirvex/Fast-Food-API.svg?branch=master)](https://travis-ci.org/asirvex/Fast-Food-API)
 
-[![Coverage Status](https://coveralls.io/repos/github/asirvex/Fast-Food-API/badge.svg?branch=master)](https://coveralls.io/github/asirvex/Fast-Food-API?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/asirvex/Fast-Food-API/badge.svg)](https://coveralls.io/github/asirvex/Fast-Food-API)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/8c5bc842bc44fc7b1e26/maintainability)](https://codeclimate.com/github/asirvex/Fast-Food-API/maintainability)
 
