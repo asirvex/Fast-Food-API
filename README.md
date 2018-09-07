@@ -29,12 +29,12 @@ You can test the endpoints using postman:
 
 	1. get "/api/v1/orders" - get all orders
 
-	2. get "/api/v1/orders/<orderId>" - get a specific order
+	1. get "/api/v1/orders/<orderId>" - get a specific order
 
-	3. post "/api/v1/orders" - post an order
+	1. post "/api/v1/orders" - post an order
 	use json format and specify only the order name 
 		e.g {"name":"burger"}
 
-	4. put "/api/v1/orders/<orderId>" - edit an order where <orderId> is an integer
+	1. put "/api/v1/orders/<orderId>" - edit an order where <orderId> is an integer
 	use json format and specify only the order name 
 		e.g {"name":"burger"}
