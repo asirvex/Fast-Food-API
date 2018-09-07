@@ -42,18 +42,18 @@ def create_App(config_name):
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile("../instance/config.py")
 
-    @app.route("/orders")
+    @app.route("/api/v1/orders")
     def get_orders():
         return jsonify(orders)
 
-    @app.route("/orders/<orderId>")
+    @app.route("/api/v1/orders/<orderId>")
     def get_order(orderId):
         orderId = int(orderId)
         for order in orders:
             if order["id"] == orderId:
                 return jsonify(order)
 
-    @app.route("/orders", methods=["POST"])
+    @app.route("/api/v1/orders", methods=["POST"])
     def post_orders():
         order_input = request.json["name"]
         for food in foods:
@@ -62,7 +62,7 @@ def create_App(config_name):
                 return jsonify(orders)
         return "food not found"
 
-    @app.route("/orders/<orderId>", methods=["PUT"])
+    @app.route("/api/v1/orders/<orderId>", methods=["PUT"])
     def edit_orders(orderId):
         orderId = int(orderId)
         order_input = request.json["name"]
