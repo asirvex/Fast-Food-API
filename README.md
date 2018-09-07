@@ -26,6 +26,7 @@ $ pip install -r requirements.txt
 	$ python run.py
 
 You can test the endpoints using postman:
+
 	1. get "/api/v1/orders" - get all orders
 
 	2. get "/api/v1/orders/<orderId>" - get a specific order
