@@ -1,4 +1,5 @@
 Flask==1.0.2
+gunicorn==19.9.0
 pytest==3.6.3
 pytest-cov==2.5.1
 pyOpenSSL==18.0.0
