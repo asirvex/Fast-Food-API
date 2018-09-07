@@ -7,4 +7,4 @@ name = os.getenv('APP_SETTINGS')
 app = create_App(name)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
