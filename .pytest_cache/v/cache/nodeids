@@ -1,0 +1,6 @@
+[
+  "test_api.py::FastFoodTestCase::test_edit_orders",
+  "test_api.py::FastFoodTestCase::test_get_order",
+  "test_api.py::FastFoodTestCase::test_get_orders",
+  "test_api.py::FastFoodTestCase::test_post_orders"
+]
