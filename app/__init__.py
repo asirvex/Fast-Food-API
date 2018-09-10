@@ -4,21 +4,35 @@ from instance.config import app_config
 foods =  [{
     "id": 1,
     "name": "burger",
+    "quantity": "1 piece",
     "price": 80
 }, {
     "id": 2,
     "name": "smokey",
+    "quantity": "1 piece",
     "price": 35
 }, {
     "id": 3,
     "name": "chicken sandwich",
-    "price": 150
+    "quantity": "1 piece",
+    "price": 100
+}, {
+    "id": 4,
+    "name": "soda",
+    "quantity": "500ml",
+    "price": 80
 }
 ]
 
 orders = [{
+    "id": 2,
+    "name": "chicken sandwich",
+    "quantity": "1 piece",
+    "price": 100
+}, {
     "id": 1,
     "name": "burger",
+    "quantity": "1 piece",
     "price": 80
 }
 ]
@@ -27,13 +41,13 @@ def find_order(key, name):
     for order in orders:
         if order[key] == name:
             return True, order
-    return False, "filler"
+    return False, 0
 
 def find_foods(key, name):
     for food in foods:
         if food[key] == name:
             return True, food
-    return False, "filler"
+    return False, 0
     
 
 def create_App(config_name):
@@ -52,6 +66,7 @@ def create_App(config_name):
         for order in orders:
             if order["id"] == orderId:
                 return jsonify(order)
+        return "orderId not found"
 
     @app.route("/api/v1/orders", methods=["POST"])
     def post_orders():
@@ -78,9 +93,5 @@ def create_App(config_name):
                 return "food not found"
         else:
             return "orderId not available"
-
-
-
-
 
     return app
