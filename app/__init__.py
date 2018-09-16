@@ -1,26 +1,31 @@
 from flask import Flask, jsonify, request
 from instance.config import app_config
+from werkzeug.security import generate_password_hash, check_password_hash
 
 foods =  [{
     "id": 1,
     "name": "burger",
     "quantity": "1 piece",
-    "price": 80
+    "price": 80,
+    "units": 1
 }, {
     "id": 2,
     "name": "smokey",
     "quantity": "1 piece",
-    "price": 35
+    "price": 35,
+    "units": 1
 }, {
     "id": 3,
     "name": "chicken sandwich",
     "quantity": "1 piece",
-    "price": 100
+    "price": 100,
+    "units": 1
 }, {
     "id": 4,
     "name": "soda",
     "quantity": "500ml",
-    "price": 80
+    "price": 80,
+    "units": 1
 }
 ]
 
@@ -28,29 +33,38 @@ orders = [{
     "id": 2,
     "name": "chicken sandwich",
     "quantity": "1 piece",
-    "price": 100
+    "price": 100,
+    "units": 1
 }, {
     "id": 1,
     "name": "burger",
     "quantity": "1 piece",
-    "price": 80
+    "price": 80,
+    "units": 1
 }
 ]
 
-def find_order(key, name):
+users = {}
+
+def find_order(key, value):
     for order in orders:
-        if order[key] == name:
+        if order[key] == value:
             return True, order
     return False, 0
 
-def find_foods(key, name):
+def find_foods(key, value):
     for food in foods:
-        if food[key] == name:
+        if food[key] == value:
             return True, food
     return False, 0
     
+def add_user(email, username, password):
+    user={}
+    user["email"] = email
+    user["password"] = generate_password_hash(password, method="sha256")
+    users["username"] = user
 
-def create_App(config_name):
+def create_app(config_name):
     """app configuration"""
     app = Flask(__name__)
     app.config.from_object(app_config[config_name])
@@ -58,23 +72,36 @@ def create_App(config_name):
 
     @app.route("/api/v1/orders")
     def get_orders():
-        return jsonify(orders)
+        response = jsonify(orders)
+        return response
 
     @app.route("/api/v1/orders/<orderId>")
     def get_order(orderId):
         orderId = int(orderId)
         for order in orders:
             if order["id"] == orderId:
-                return jsonify(order)
+                response = jsonify(order)
+                return response
         return "orderId not found"
 
     @app.route("/api/v1/orders", methods=["POST"])
     def post_orders():
         order_input = request.json["name"]
+        order_exists = find_order("name", order_input)[0]
+        print(order_exists)
+        order = find_order("name", order_input)[1]
         for food in foods:
             if order_input == food["name"]:
-                orders.append(food)
-                return jsonify(orders)
+                if order_exists:
+                    order["units"] += 1
+                    response = jsonify({"message": "updated successfully","ordered items": orders})
+                    response.status_code = 201
+                    return response
+                else:
+                    orders.append(food)
+                    response = jsonify({"message": "updated successfully","ordered items": orders})
+                    response.status_code = 201
+                    return response
         return "food not found"
 
     @app.route("/api/v1/orders/<orderId>", methods=["PUT"])
@@ -88,7 +115,8 @@ def create_App(config_name):
         if bool1:
             if bool2:
                 orders[orders.index(order)] = food
-                return jsonify(orders)
+                response = jsonify({"message": "updated successfully","ordered items": orders})
+                return response
             else:
                 return "food not found"
         else:
