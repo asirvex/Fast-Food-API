@@ -88,7 +88,6 @@ def create_app(config_name):
     def post_orders():
         order_input = request.json["name"]
         order_exists = find_order("name", order_input)[0]
-        print(order_exists)
         order = find_order("name", order_input)[1]
         for food in foods:
             if order_input == food["name"]:
@@ -108,15 +107,28 @@ def create_app(config_name):
     def edit_orders(orderId):
         orderId = int(orderId)
         order_input = request.json["name"]
-        bool1 = find_order("id", orderId)[0]
-        order = find_order("id", orderId)[1]
-        bool2 = find_foods("name", order_input)[0]
+        orderid_exists = find_order("id", orderId)[0]
+        order_byid = find_order("id", orderId)[1]
+        food_exists = find_foods("name", order_input)[0]
         food = find_foods("name", order_input)[1]
-        if bool1:
-            if bool2:
-                orders[orders.index(order)] = food
-                response = jsonify({"message": "updated successfully","ordered items": orders})
-                return response
+        order_exists = find_order("name", order_input)[0]
+        order = find_order("name", order_input)[1]
+
+        if orderid_exists:
+            if food_exists:
+                if order_exists:
+                    order["units"] += 1
+                    order_byid["units"] -= 1
+                    if order_byid["units"] == 0:
+                        orders.__delitem__(orders.index(order_byid))
+                    response = jsonify({"message": "updated successfully","ordered items": orders})
+                    response.status_code = 201
+                    return response
+                else:
+                    orders[orders.index(order_byid)] = food
+                    response = jsonify({"message": "updated successfully","ordered items": orders})
+                    response.status_code = 201
+                    return response
             else:
                 return "food not found"
         else:
