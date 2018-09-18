@@ -62,8 +62,6 @@ def add_user(email, username, password):
     user={}
     user["email"] = email
     user["password"] = generate_password_hash(password, method="sha256")
-    if username not in users:
-        for a_user in dicu
     users["username"] = user
 
 def create_app(config_name):
@@ -136,7 +134,18 @@ def create_app(config_name):
         else:
             return "orderId not available"
 
-        @app.route("/api/v1/orders", methods=["POST"])
+        
+    @app.route("/api/v1/orders/<orderId>", methods=["DELETE"])
+    def delete_order(orderId):
+        orderId = int(orderId)
+        found_order = find_order("id", orderId)
+        if found_order[0]:
+            orders.remove(found_order[1])
+            return jsonify("message", "item removed successfully")
+        else:
+            return jsonify("message", "Order id was not found")
+
+
 
 
     @app.route("/api/v1/signup", methods=["POST"])
@@ -146,8 +155,6 @@ def create_app(config_name):
         email = data["email"].strip()
         password = data["password"].strip()
         add_user(email, username, password)
-
-
 
 
     return app
