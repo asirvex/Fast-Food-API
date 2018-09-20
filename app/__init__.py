@@ -2,49 +2,11 @@ from flask import Flask, jsonify, request
 from instance.config import app_config
 from werkzeug.security import generate_password_hash, check_password_hash
 
-foods =  [{
-    "id": 1,
-    "name": "burger",
-    "quantity": "1 piece",
-    "price": 80,
-    "units": 1
-}, {
-    "id": 2,
-    "name": "smokey",
-    "quantity": "1 piece",
-    "price": 35,
-    "units": 1
-}, {
-    "id": 3,
-    "name": "chicken sandwich",
-    "quantity": "1 piece",
-    "price": 100,
-    "units": 1
-}, {
-    "id": 4,
-    "name": "soda",
-    "quantity": "500ml",
-    "price": 80,
-    "units": 1
-}
-]
+foods =  []
 
-orders = [{
-    "id": 2,
-    "name": "chicken sandwich",
-    "quantity": "1 piece",
-    "price": 100,
-    "units": 1
-}, {
-    "id": 1,
-    "name": "burger",
-    "quantity": "1 piece",
-    "price": 80,
-    "units": 1
-}
-]
+orders = []
 
-users = {}
+users = []
 
 def find_order(key, value):
     for order in orders:
@@ -58,11 +20,11 @@ def find_foods(key, value):
             return True, food
     return False, 0
     
-def add_user(email, username, password):
+"""def add_user(email, username, password):
     user={}
     user["email"] = email
     user["password"] = generate_password_hash(password, method="sha256")
-    users["username"] = user
+    users["username"] = user"""
 
 def create_app(config_name):
     """app configuration"""
@@ -145,16 +107,28 @@ def create_app(config_name):
         else:
             return jsonify("message", "Order id was not found")
 
+    @app.route("/api/v1/food")
+    def get_food():
+        return jsonify(foods)
+
+    @app.route("/api/v1/food", methods=["POST"])
+    def post_food():
+        data = request.get_json()
+        if not data:
+            return jsonify("message", "data to be posted cannot be blank")
+        foods.append(data)
+        return jsonify("message:", "food added successfully")
+        
 
 
 
-    @app.route("/api/v1/signup", methods=["POST"])
+    """@app.route("/api/v1/signup", methods=["POST"])
     def create_user():
         data = request.get_json()
         username = data["username"].strip()
         email = data["email"].strip()
         password = data["password"].strip()
-        add_user(email, username, password)
+        add_user(email, username, password)"""
 
 
     return app
