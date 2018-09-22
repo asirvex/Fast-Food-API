@@ -34,7 +34,10 @@ def create_app(config_name):
 
     @app.route("/api/v1/orders")
     def get_orders():
-        response = jsonify(orders)
+        if orders:
+            response = jsonify(orders)
+        else:
+            response = jsonify("message", "no orders available")
         return response
 
     @app.route("/api/v1/orders/<orderId>")
