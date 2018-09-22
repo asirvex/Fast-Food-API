@@ -16,7 +16,7 @@ class db():
         self.cur.execute(self.foods)
 
         #create orders table
-        self.orders="""CREATE TABLE orders(
+        self.orders="""CREATE TABLE IF NOT EXISTS orders(
                     id integer PRIMARY KEY,
                     name TEXT NOT NULL,
                     price REAL NOT NULL,
@@ -47,13 +47,12 @@ class db():
                             """INSERT INTO orders(id, name, price)
                             VALUES(%s, %s, %s)""", (self.id, self.name, self.price)
                             )
-        self.conn.commit()
 
     def fetch_foods(self):
         self.cur.execute("SELECT * from foods")
         return self.cur.fetchall()
 
     def fetch_orders(self):
-        self.cur.execute("SELECT * orders")
+        self.cur.execute("SELECT * from orders")
         return self.cur.fetchall()
         

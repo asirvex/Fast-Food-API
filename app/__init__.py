@@ -2,11 +2,21 @@ from flask import Flask, jsonify, request
 from instance.config import app_config
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from tables import db
+
 foods =  []
 
 orders = []
 
 users = []
+
+db=db()
+f_rows=db.fetch_foods
+for row in f_rows:
+    foods.append({"id":row[0], "name":row[1], "price":row[2]})
+o_rows=db.fetch_orders
+for row in o_rows:
+    orders.append({"id":row[0], "name":row[1], "price":row[2]})
 
 def find_order(key, value):
     for order in orders:
