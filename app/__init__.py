@@ -11,10 +11,10 @@ orders = []
 users = []
 
 db=db()
-f_rows=db.fetch_foods
+f_rows=db.fetch_foods()
 for row in f_rows:
     foods.append({"id":row[0], "name":row[1], "price":row[2]})
-o_rows=db.fetch_orders
+o_rows=db.fetch_orders()
 for row in o_rows:
     orders.append({"id":row[0], "name":row[1], "price":row[2]})
 
