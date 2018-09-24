@@ -20,12 +20,7 @@ def find_foods(key, value):
         if food[key] == value:
             return True, food
     return False, 0
-    
-"""def add_user(email, username, password):
-    user={}
-    user["email"] = email
-    user["password"] = generate_password_hash(password, method="sha256")
-    users["username"] = user"""
+
 
 def create_app(config_name):
     """app configuration"""
@@ -147,13 +142,6 @@ def create_app(config_name):
 
 
 
-    """@app.route("/api/v1/signup", methods=["POST"])
-    def create_user():
-        data = request.get_json()
-        username = data["username"].strip()
-        email = data["email"].strip()
-        password = data["password"].strip()
-        add_user(email, username, password)"""
-
+   
 
     return app
