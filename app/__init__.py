@@ -64,6 +64,7 @@ def create_app(config_name):
         order_input = request.json["name"]
         order_exists = find_order("name", order_input)[0]
         order = find_order("name", order_input)[1]
+
         for food in foods:
             if order_input == food["name"]:
                 if order_exists:
@@ -72,7 +73,9 @@ def create_app(config_name):
                     response.status_code = 201
                     return response
                 else:
-                    orders.append(food)
+                    nfood=food
+                    nfood["units"]=1
+                    orders.append(nfood)
                     response = jsonify({"message": "updated successfully","ordered items": orders})
                     response.status_code = 201
                     return response
