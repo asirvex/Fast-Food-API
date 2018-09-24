@@ -1,22 +1,13 @@
 from flask import Flask, jsonify, request
 from instance.config import app_config
 from werkzeug.security import generate_password_hash, check_password_hash
-
-from tables import db
-
+from app.models import Db
 foods =  []
 
 orders = []
 
 users = []
 
-db=db()
-f_rows=db.fetch_foods()
-for row in f_rows:
-    foods.append({"id":row[0], "name":row[1], "price":row[2]})
-o_rows=db.fetch_orders()
-for row in o_rows:
-    orders.append({"id":row[0], "name":row[1], "price":row[2]})
 
 def find_order(key, value):
     for order in orders:
@@ -41,6 +32,15 @@ def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile("../instance/config.py")
+
+    db=Db()
+    f_rows=db.fetch_foods()
+    for row in f_rows:
+        foods.append({"id":row[0], "name":row[1], "price":row[2]})
+        o_rows=db.fetch_orders()
+    for row in o_rows:
+        orders.append({"id":row[0], "name":row[1], "price":row[2]})
+
 
     @app.route("/api/v1/orders")
     def get_orders():
@@ -120,17 +120,23 @@ def create_app(config_name):
         else:
             return jsonify("message", "Order id was not found")
 
-    @app.route("/api/v1/food")
+    @app.route("/api/v1/foods")
     def get_food():
-        return jsonify(foods)
+        if not foods:
+            return jsonify("message", "no foods in the foods list"), 404
+        return jsonify(foods), 200
 
-    @app.route("/api/v1/food", methods=["POST"])
+    @app.route("/api/v1/foods", methods=["POST"])
     def post_food():
         data = request.get_json()
         if not data:
             return jsonify("message", "data to be posted cannot be blank")
-        foods.append(data)
-        return jsonify("message:", "food added successfully")
+        elif find_foods("id", data["id"])[0]:
+                return jsonify("message", "food already exists")
+        else:
+            foods.append(data)
+            db.insert_food(id=data["id"], name=data["name"], price=data["price"])
+            return jsonify("message:", "food added successfully")
         
 
 

@@ -1,6 +1,6 @@
 import os, psycopg2
 
-class db():
+class Db(object):
     def __init__(self):
         self.db_url=os.getenv('DATABASE_URL')
         self.conn= psycopg2.connect(self.db_url)
