@@ -73,7 +73,10 @@ def create_app(config_name):
                     response.status_code = 201
                     return response
                 else:
-                    nfood=food
+                    nfood={}
+                    nfood["id"]=food["id"]
+                    nfood["name"]=food["name"]
+                    nfood["price"]=food["price"]
                     nfood["units"]=1
                     orders.append(nfood)
                     response = jsonify({"message": "updated successfully","ordered items": orders})
