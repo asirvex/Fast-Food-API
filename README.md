@@ -9,37 +9,37 @@ Fast-Food-Fast is an online food delivery service
 
 To run this project:
 
-1. Create a virtual environment   
+- Create a virtual environment   
 `$ virtualenv -p python3 env`
 
-1. Activate the virtual environment   
+- Activate the virtual environment   
 `$ source env/Scripts/activate`
 
 
-1. Clone this repo   
+- Clone this repo   
 `$ git clone "https://github.com/asirvex/Fast-Food-API.git"`
 
-1. Install requirements   
+- Install requirements   
 `$ pip install -r requirements.txt`
 
-1. To run:
-	1. for tests run
+- To run:
+	- for tests run
 	`$ python test_api.py`
 
-	1. for the app run
+	- for the app run
 	`$ export APP_SETTINGS="development"`
 	`$ python run.py`
 
 You can test the endpoints using postman:
 
-	1. get "/api/v1/orders" - get all orders
+	- get "/api/v1/orders" - get all orders
 
-	1. get "/api/v1/orders/<orderId>" - get a specific order
+	- get "/api/v1/orders/<orderId>" - get a specific order
 
-	1. post "/api/v1/orders" - post an order
+	- post "/api/v1/orders" - post an order
 	use json format and specify only the order name 
 		e.g {"name":"burger"}
 
-	1. put "/api/v1/orders/<orderId>" - edit an order where <orderId> is an integer
+	- put "/api/v1/orders/<orderId>" - edit an order where <orderId> is an integer
 	use json format and specify only the order name 
 		e.g {"name":"burger"}
