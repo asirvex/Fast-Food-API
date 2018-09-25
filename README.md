@@ -32,8 +32,8 @@ To run this project:
 
 You can test the endpoints using postman:
 
-    | endpoint | method | description |
-    | --- | --- | --- |
-	| /api/v1/orders | GET | view all orders |
-	| /api/v1/orders | POST | add an order |
-	| /api/v1/orders/<orderId> | GET | view a specific order |
+| endpoint | method | description |
+| --- | --- | --- |
+| /api/v1/orders | GET | view all orders |
+| /api/v1/orders | POST | add an order |
+| /api/v1/orders/orderId | GET | view a specific order |
