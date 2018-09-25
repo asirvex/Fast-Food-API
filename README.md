@@ -37,3 +37,12 @@ You can test the endpoints using postman:
 | /api/v1/orders | GET | view all orders |
 | /api/v1/orders | POST | add an order |
 | /api/v1/orders/orderId | GET | view a specific order |
+| /api/v1/orders/orderId | PUT | edit a specific order |
+| /api/v1/orders/orderId | DELETE | delete a specific order |
+
+| endpoint | method | description |
+| --- | --- | --- |
+| /api/v1/foods | GET | view all foods |
+| /api/v1/foods | POST | add a food |
+| /api/v1/foods/foodId | GET | view a specific food |
+| /api/v1/foods/foodId | PUT | edit a specific food |
