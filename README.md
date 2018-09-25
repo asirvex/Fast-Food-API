@@ -32,14 +32,8 @@ To run this project:
 
 You can test the endpoints using postman:
 
-	- get "/api/v1/orders" - get all orders
-
-	- get "/api/v1/orders/<orderId>" - get a specific order
-
-	- post "/api/v1/orders" - post an order
-	use json format and specify only the order name 
-		e.g {"name":"burger"}
-
-	- put "/api/v1/orders/<orderId>" - edit an order where <orderId> is an integer
-	use json format and specify only the order name 
-		e.g {"name":"burger"}
+	| endpoint | method | description |
+	| -------- | ------ | ----------- |
+	| /api/v1/orders | GET | view all orders |
+	| /api/v1/orders | POST | add an order |
+	| /api/v1/orders/<orderId> | GET | view a specific order |
