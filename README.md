@@ -1,4 +1,5 @@
-This is an online food delivery service
+#Fast-Food-Fast
+Fast-Food-Fast is an online food delivery service
 
 [![Build Status](https://travis-ci.org/asirvex/Fast-Food-API.svg?branch=master)](https://travis-ci.org/asirvex/Fast-Food-API)
 
@@ -9,25 +10,25 @@ This is an online food delivery service
 To run this project:
 
 1. Create a virtual environment   
-$ virtualenv -p python3 env
+`$ virtualenv -p python3 env`
 
 1. Activate the virtual environment   
-$ source env/Scripts/activate
+`$ source env/Scripts/activate`
 
 
 1. Clone this repo   
-$ git clone "https://github.com/asirvex/Fast-Food-API.git"
+`$ git clone "https://github.com/asirvex/Fast-Food-API.git"`
 
 1. Install requirements   
-$ pip install -r requirements.txt
+`$ pip install -r requirements.txt`
 
 1. To run:
 	1. for tests run
-	$ python test_api.py
+	`$ python test_api.py`
 
 	1. for the app run
-	$ export APP_SETTINGS="development"
-	$ python run.py
+	`$ export APP_SETTINGS="development"`
+	`$ python run.py`
 
 You can test the endpoints using postman:
 
