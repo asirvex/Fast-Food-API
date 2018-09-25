@@ -23,14 +23,15 @@ To run this project:
 `$ pip install -r requirements.txt`
 
 - To run:
-	- for tests run
-	`$ python test_api.py`
+    - for tests run
+    `$ python test_api.py`
 
-	- for the app run
-	`$ export APP_SETTINGS="development"`
-	`$ python run.py`
+    - for the app run
+    `$ export APP_SETTINGS="development"`
+    `$ python run.py`
 
 You can test the endpoints using postman:
+    orders
 
 | endpoint | method | description |
 | --- | --- | --- |
@@ -39,6 +40,8 @@ You can test the endpoints using postman:
 | /api/v1/orders/orderId | GET | view a specific order |
 | /api/v1/orders/orderId | PUT | edit a specific order |
 | /api/v1/orders/orderId | DELETE | delete a specific order |
+
+    foods
 
 | endpoint | method | description |
 | --- | --- | --- |
