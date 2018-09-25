@@ -138,10 +138,36 @@ def create_app(config_name):
             foods.append(data)
             db.insert_food(id=data["id"], name=data["name"], price=data["price"])
             return jsonify("message:", "food added successfully")
+
+    @app.route("/api/v1/foods/<foodId>")
+    def get_one_food(foodId):
+        foodId = int(foodId)
+        if not foodId:
+            return jsonify("message", "food id cannot be zero or empty")
+        food_exists=find_foods("id", foodId)[0]
+        food=find_foods("id", foodId)[1]
+        if not food_exists:
+            return jsonify("message", "food not found")
+        if food_exists:
+            return jsonify(food)
+        return jsonify()
+
+    @app.route("/api/v1/foods/<foodId>", methods=["PUT"])
+    def put_food(foodId):
+        data=request.get_json()
+        if not data["id"] or not data["name"] or not data["price"]:
+            return jsonify("message", "input should have 'id', 'name', 'price'")
+        foodId=int(foodId)
+        food_exists=find_foods("id", foodId)[0]
+        food=find_foods("id", foodId)[1]
+        if find_foods("id", data["id"])[0]:
+            return jsonify("message", "another food with the same id exists")
+        if food_exists:
+            food["id"]=data["id"]
+            food["name"]=data["name"]
+            food["price"]=food["price"]
+            return jsonify("message", "food updated successfully")
+        if not food_exists:
+            return jsonify("message", "food not found"), 404
         
-
-
-
-   
-
     return app
