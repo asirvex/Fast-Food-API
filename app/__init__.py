@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, request
 from instance.config import app_config
-from werkzeug.security import generate_password_hash, check_password_hash
-from app.models import Db
+
 foods =  []
 
 orders = []
@@ -27,14 +26,6 @@ def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile("../instance/config.py")
-
-    db=Db()
-    f_rows=db.fetch_foods()
-    for row in f_rows:
-        foods.append({"id":row[0], "name":row[1], "price":row[2]})
-        o_rows=db.fetch_orders()
-    for row in o_rows:
-        orders.append({"id":row[0], "name":row[1], "price":row[2]})
 
 
     @app.route("/api/v1/orders")
@@ -136,7 +127,6 @@ def create_app(config_name):
                 return jsonify("message", "food already exists")
         else:
             foods.append(data)
-            db.insert_food(id=data["id"], name=data["name"], price=data["price"])
             return jsonify("message:", "food added successfully")
 
     @app.route("/api/v1/foods/<foodId>")
