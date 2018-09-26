@@ -30,18 +30,17 @@ To run this project:
     `$ export APP_SETTINGS="development"`
     `$ python run.py`
 
-You can test the endpoints using postman:
-    - The foods and orders list are empty on initialisation, you must post them first to retrieve their respective lists
-    - the input format for post and put should be json and must contain id, name and price fields e.g {
-        "id": 1,
-        "name": "foodname",
-        "price": 100
-    } 
+You can test the endpoints using postman
+- The foods and orders list are empty on initialisation, you must post them first to retrieve their respective lists
+- the input format for post and put should be json and must contain id, name and price fields e.g {
+    "id": 1,
+    "name": "foodname",
+    "price": 100
+} 
+    - id should be an integer greater than zero
+    - name should be a string
+    - price should be a number (int or float)
 
-        - id should be an integer greater than zero
-        - name should be a string
-        - price should be a number (int or float)
-    
 	orders
 
 | endpoint | method | description |
