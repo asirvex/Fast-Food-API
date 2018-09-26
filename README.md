@@ -1,4 +1,5 @@
-This is an online food delivery service
+#Fast-Food-Fast
+Fast-Food-Fast is an online food delivery service
 
 [![Build Status](https://travis-ci.org/asirvex/Fast-Food-API.svg?branch=master)](https://travis-ci.org/asirvex/Fast-Food-API)
 
@@ -8,37 +9,54 @@ This is an online food delivery service
 
 To run this project:
 
-1. Create a virtual environment   
-$ virtualenv -p python3 env
+- Create a virtual environment   
+`$ virtualenv -p python3 env`
 
-1. Activate the virtual environment   
-$ source env/Scripts/activate
+- Activate the virtual environment   
+`$ source env/Scripts/activate`
 
 
-1. Clone this repo   
-$ git clone "https://github.com/asirvex/Fast-Food-API.git"
+- Clone this repo   
+`$ git clone "https://github.com/asirvex/Fast-Food-API.git"`
 
-1. Install requirements   
-$ pip install -r requirements.txt
+- Install requirements   
+`$ pip install -r requirements.txt`
 
-1. To run:
-	1. for tests run
-	$ python test_api.py
+- To run:
+    - for tests run
+    `$ python test_api.py`
 
-	1. for the app run
-	$ export APP_SETTINGS="development"
-	$ python run.py
+    - for the app run
+    `$ export APP_SETTINGS="development"`
+    `$ python run.py`
 
 You can test the endpoints using postman:
+    - The foods and orders list are empty on initialisation, you must post them first to retrieve their respective lists
+    - the input format for post and put should be json and must contain id, name and price fields e.g {
+        "id": 1,
+        "name": "foodname",
+        "price": 100
+    } 
 
-	1. get "/api/v1/orders" - get all orders
+        - id should be an integer greater than zero
+        - name should be a string
+        - price should be a number (int or float)
+    
+	orders
 
-	1. get "/api/v1/orders/<orderId>" - get a specific order
+| endpoint | method | description |
+| --- | --- | --- |
+| /api/v1/orders | GET | view all orders |
+| /api/v1/orders | POST | add an order |
+| /api/v1/orders/orderId | GET | view a specific order |
+| /api/v1/orders/orderId | PUT | edit a specific order |
+| /api/v1/orders/orderId | DELETE | delete a specific order |
 
-	1. post "/api/v1/orders" - post an order
-	use json format and specify only the order name 
-		e.g {"name":"burger"}
+    foods
 
-	1. put "/api/v1/orders/<orderId>" - edit an order where <orderId> is an integer
-	use json format and specify only the order name 
-		e.g {"name":"burger"}
+| endpoint | method | description |
+| --- | --- | --- |
+| /api/v1/foods | GET | view all foods |
+| /api/v1/foods | POST | add a food |
+| /api/v1/foods/foodId | GET | view a specific food |
+| /api/v1/foods/foodId | PUT | edit a specific food |
