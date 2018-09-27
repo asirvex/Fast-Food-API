@@ -47,7 +47,8 @@ def create_app(config_name):
 
     @app.route("/api/v1/orders", methods=["POST"])
     def post_orders():
-        order_input = request.json["name"]
+        order_input = request.get_json()
+        order_input = order_input["name"]
         order_exists = find_order("name", order_input)[0]
         order = find_order("name", order_input)[1]
 
@@ -73,35 +74,20 @@ def create_app(config_name):
     @app.route("/api/v1/orders/<orderId>", methods=["PUT"])
     def edit_orders(orderId):
         orderId = int(orderId)
-        order_input = request.json["name"]
-        orderid_exists = find_order("id", orderId)[0]
-        order_byid = find_order("id", orderId)[1]
-        food_exists = find_foods("name", order_input)[0]
-        food = find_foods("name", order_input)[1]
-        order_exists = find_order("name", order_input)[0]
-        order = find_order("name", order_input)[1]
+        order_exists = find_order("id", orderId)[0]
+        order = find_order("id", orderId)[1]
+        order_status=request.get_json()
+        if "status" not in order_status:
+            return jsonify({"message": "your input must contain a 'status' field"})
+        order_status=order_status["status"].strip()
+        if not order_exists:
+            return jsonify({"message":"orderId does not exist"})      
+        if order_status == "accepted" or order_status == "declined" or order_status == "completed":     
+            if order_exists:
+                order["status"] = order_status
+                return jsonify({"message": "order status changed successfully"})
+        return jsonify({"message": "order status must be accepted, declined or completed"}, order_status)
 
-        if orderid_exists:
-            if food_exists:
-                if order_exists:
-                    order["units"] += 1
-                    order_byid["units"] -= 1
-                    if order_byid["units"] == 0:
-                        orders.__delitem__(orders.index(order_byid))
-                    response = jsonify({"message": "updated successfully","ordered items": orders})
-                    response.status_code = 201
-                    return response
-                else:
-                    orders[orders.index(order_byid)] = food
-                    response = jsonify({"message": "updated successfully","ordered items": orders})
-                    response.status_code = 201
-                    return response
-            else:
-                return "food not found"
-        else:
-            return "orderId not available"
-
-        
     @app.route("/api/v1/orders/<orderId>", methods=["DELETE"])
     def delete_order(orderId):
         orderId = int(orderId)
