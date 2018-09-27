@@ -108,12 +108,12 @@ def create_app(config_name):
     def post_food():
         data = request.get_json()
         if not data:
-            return jsonify("message", "data to be posted cannot be blank")
+            return jsonify("message", "data to be posted cannot be blank"), 400
         elif find_foods("id", data["id"])[0]:
-                return jsonify("message", "food already exists")
+                return jsonify("message", "food already exists"), 400
         else:
             foods.append(data)
-            return jsonify("message:", "food added successfully")
+            return jsonify("message:", "food added successfully"), 200
 
     @app.route("/api/v1/foods/<foodId>")
     def get_one_food(foodId):

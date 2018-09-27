@@ -1,7 +1,7 @@
 import unittest
 import os
 import json
-from app import create_app
+from app import create_app, find_order, find_foods
 
 class FastFoodTestCase(unittest.TestCase):
     """This class tests the endpoints"""
@@ -18,6 +18,11 @@ class FastFoodTestCase(unittest.TestCase):
         self.statusData = json.dumps({
                                     "status": "accepted"
                                     })
+    def test_find_order(self):
+        self.assertEqual(find_order("id", 1), (False, 0))
+
+    def test_find_foods(self):
+        self.assertEqual(find_foods("id", 1), (False, 0))
 
     def test_post_foods(self):
         """test whether a food is posted successfully or not"""
@@ -50,7 +55,13 @@ class FastFoodTestCase(unittest.TestCase):
         res = self.client().delete("/api/v1/orders/1", data = self.EntryData, content_type = "application/json")
         self.assertEqual(res.status_code, 404)
 
+    def test_get_food(self):
+        res = self.client().get("/api/v1/orders")
+        self.assertEqual(res.status_code, 200)
 
+    def test_get_one_food(self):
+        res = self.client().get("/api/v1/orders/1")
+        self.assertEqual(res.status_code, 200)
 
 if __name__ == "__main__":
     unittest.main()
