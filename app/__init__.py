@@ -67,9 +67,9 @@ def create_app(config_name):
                     nfood["units"]=1
                     orders.append(nfood)
                     response = jsonify({"message": "updated successfully","ordered items": orders})
-                    response.status_code = 201
+                    response.status_code = 200
                     return response
-        return "food not found"
+        return jsonify({"message":"food not found"}), 404 
 
     @app.route("/api/v1/orders/<orderId>", methods=["PUT"])
     def edit_orders(orderId):
@@ -78,15 +78,15 @@ def create_app(config_name):
         order = find_order("id", orderId)[1]
         order_status=request.get_json()
         if "status" not in order_status:
-            return jsonify({"message": "your input must contain a 'status' field"})
+            return jsonify({"message": "your input must contain a 'status' field"}), 400
         order_status=order_status["status"].strip()
         if not order_exists:
-            return jsonify({"message":"orderId does not exist"})      
+            return jsonify({"message":"orderId does not exist"}), 404     
         if order_status == "accepted" or order_status == "declined" or order_status == "completed":     
             if order_exists:
                 order["status"] = order_status
-                return jsonify({"message": "order status changed successfully"})
-        return jsonify({"message": "order status must be accepted, declined or completed"}, order_status)
+                return jsonify({"message": "order status changed successfully"}), 200
+        return jsonify({"message": "order status must be accepted, declined or completed"}, order_status), 400
 
     @app.route("/api/v1/orders/<orderId>", methods=["DELETE"])
     def delete_order(orderId):
@@ -94,9 +94,9 @@ def create_app(config_name):
         found_order = find_order("id", orderId)
         if found_order[0]:
             orders.remove(found_order[1])
-            return jsonify("message", "item removed successfully")
+            return jsonify("message", "item removed successfully"), 200
         else:
-            return jsonify("message", "Order id was not found")
+            return jsonify("message", "Order id was not found"), 404
 
     @app.route("/api/v1/foods")
     def get_food():
