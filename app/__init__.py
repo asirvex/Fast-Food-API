@@ -48,10 +48,11 @@ def create_app(config_name):
     @app.route("/api/v1/orders", methods=["POST"])
     def post_orders():
         order_input = request.get_json()
+        if "name" not in order_input:
+            return jsonify({"message":"input must contain 'name' key"}), 400
         order_input = order_input["name"]
         order_exists = find_order("name", order_input)[0]
         order = find_order("name", order_input)[1]
-
         for food in foods:
             if order_input == food["name"]:
                 if order_exists:
@@ -108,7 +109,9 @@ def create_app(config_name):
     def post_food():
         data = request.get_json()
         if not data:
-            return jsonify("message", "data to be posted cannot be blank"), 400
+            return jsonify({"message":"data to be posted cannot be blank"}), 400
+        if "name" not in data or "id" not in data or "price" not in data:
+            return jsonify({"message":"input must contain 'id', name', 'price' fields"}), 400
         elif find_foods("id", data["id"])[0]:
                 return jsonify("message", "food already exists"), 400
         else:
